@@ -28,6 +28,8 @@ The Meeting Summary Generator is a Python-based tool that extracts audio from an
 
 ## Usage
 
+At the line 62 of the `main.py` script, replace the value of the `OPENAI_API_KEY` variable with your OpenAI API key.
+
 Run the `main.py` script with the following command-line arguments:
 
 - `video_path`: The path to the input video file (MP4 format)

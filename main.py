@@ -59,9 +59,9 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    openai_api_key = open("openai_apikey.txt", "r").read().strip()
+    OPENAI_API_KEY = "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
     main(video_path=args.video_path,
-         api_key=openai_api_key,
+         api_key=OPENAI_API_KEY,
          output_summary_path=args.output_summary_path,
          audio_output_path=args.audio_output_path)
