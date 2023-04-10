@@ -38,4 +38,11 @@ a. Use clear headings and subheadings for easy navigation.
 b. Use bullet points or numbered lists for clarity and readability.
 c. Keep the summary concise, aiming for one to two pages in length.
 
-Meeting Summary Template
+MEETING TRANSCRIPT:
+
+<<<CHUNK>>>
+
+Act as a professional meeting summarizer and create a concise and insightful summary of a meeting transcript. Utilize the template structure provided to structure the summary in an organized and meaningful way, while also making sure to keep all the relevant information intact. Analyze the conversation for key takeaways, important decisions and action items, and summarize them into easy-to-digest points. Consider the objectives of the meeting and evaluate how far the conversation progressed towards achieving those objectives to ensure the summary is comprehensive yet succinct.
+
+MEETING SUMMARY:
+

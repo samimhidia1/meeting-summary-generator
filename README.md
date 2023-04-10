@@ -85,6 +85,49 @@ e.g. `meeting.txt`
 
 If you choose option 4, the script will exit.
 
+## Structure of the generated summary
+
+The generated summary is structured as follows:
+
+```
+1. Meeting Objectives:
+    a. Objective 1: [Brief description]
+    b. Objective 2:
+    c. Objective 3:
+2. Key Discussion Points:
+    a. Topic 1: [Brief summary of discussion]
+        Main point 1
+        Main point 2
+        Main point 3
+    b. Topic 2:
+        Main point 1
+        Main point 2
+        Main point 3
+    c. Topic 3:
+        Main point 1
+        Main point 2
+        Main point 3
+3. Important Decisions:
+    a. Decision 1: [Decision made and rationale]
+    b. Decision 2:
+    c. Decision 3:
+4. Action Items:
+    a. Action Item 1: [Task description] - [Deadline]
+    b. Action Item 2:
+    c. Action Item 3:
+5. Meeting Outcomes:
+    a. Objective 1: [Status - Achieved/Partially Achieved/Not Achieved]
+        [Key takeaways, insights, or progress made]
+    b. Objective 2:
+    c. Objective 3:
+6. Next Steps:
+    a. Next Meeting Date: [Next Meeting Date]
+    b. Agenda Items for Next Meeting: [List of Agenda Items]
+    c. Additional Follow-up: [Any other relevant information or follow-up tasks]
+```
+
+You can change the structure of the summary by editing the `summary_structure.txt` file in the `generate_meeting_summary/prompts` directory and the line 111 of the pipelines.py script.
+
 ## Project Structure
 
 The project is structured as follows:
