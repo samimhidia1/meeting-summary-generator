@@ -1,3 +1,8 @@
 openai_apikey.txt
 .idea/
 !/.gitignore
+inputs/videos/*.mp4
+outputs/audios/*.mp3
+outputs/audios/*.wav
+outputs/summaries/*.txt
+outputs/transcriptions/*.txt

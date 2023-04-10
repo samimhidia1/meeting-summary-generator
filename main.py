@@ -1,67 +1,108 @@
-import argparse
+import os
 from typing import Optional
 
-from audio_extractor import extract_audio_from_video
-from speech_transcriber import transcribe_audio
-from meeting_summarizer import summarize_transcription
+from pipelines import video_to_summary, audio_to_summary, text_to_summary
 
 
 def main(
-        video_path: str,
+        project: str,
         api_key: str,
-        output_summary_path: Optional[str] = None,
-        audio_output_path: Optional[str] = None,
+        option: int,
+        video_name: Optional[str] = None,
+        transcription_path: Optional[str] = None,
+        audio_path: Optional[str] = None,
 ) -> None:
     """
     Extracts audio from a video, transcribes the audio, and summarizes the meeting.
 
     Parameters
     ----------
-    video_path : str
-        The path to the input video file.
+    project : str
+        The name of the project.
     api_key : str
         The OpenAI API key.
-    output_summary_path : str, optional
-        The path to save the summarized meeting notes.
-    audio_output_path : str, optional
+    option : int
+        The option to choose the input type.
+    video_name : str, optional
+        The name of the input video file.
+    transcription_path : str, optional
+        The path to the input transcription file, by default None.
+    audio_path : str, optional
         The path to save the extracted audio, by default None.
     """
-    # Step 1: Extract audio from the video
-    if audio_output_path is None:
-        audio_output_path = "outputs/audios/extracted_audio_{}.wav".format(video_path.split("/")[-1].split(".")[0])
-
-    if output_summary_path is None:
-        output_summary_path = "outputs/summaries/summary_{}.txt".format(video_path.split("/")[-1].split(".")[0])
-
-    extract_audio_from_video(video_path, audio_output_path)
-
-    # Step 2: Transcribe the audio
-    transcriptions = transcribe_audio(api_key, audio_output_path)
-
-    # Step 3: Summarize the meeting transcription
-    summary = summarize_transcription(api_key, transcriptions)
-
-    # Save the summary to a file
-    with open(output_summary_path, "w") as summary_file:
-        summary_file.write(summary)
-
-    print(f"Meeting summary saved to: {output_summary_path}")
+    if option == 1:
+        video_to_summary(project=project, video_name=video_name, api_key=api_key)
+    elif option == 2:
+        audio_to_summary(project, audio_path=audio_path, api_key=api_key)
+    elif option == 3:
+        transcription = open(transcription_path, "r", encoding='utf-8').read()
+        name = transcription_path.split("/")[-1].split(".")[0]
+        text_to_summary(project, transcription=transcription, name=name, api_key=api_key)
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Generate a meeting summary from a video")
-    parser.add_argument("--video_path", type=str, required=True,
-                        help="The path to the input video file (MP4 format)")
-    parser.add_argument("--output_summary_path", type=str,
-                        help="The path to save the summarized meeting notes (text format)")
-    parser.add_argument("--audio_output_path", type=str,
-                        help="The path to save the extracted audio (WAV format)")
+    # OPENAI_API_KEY = open("openai_apikey.txt", "r").read().strip()
+    OPENAI_API_KEY = "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
-    args = parser.parse_args()
+    print("Welcome to the meeting summarizer!")
+    print("This program will summarize a meeting from a video, audio file, or text file.")
+    print("Il will first extract the audio from the video, then transcribe the audio, "
+          "and finally summarize the meeting notes to a text file.")
+    print("You can also choose to start from an audio file or a text file directly.")
+    print("To begin with Enter a name for your project.")
+    project_name = input("Enter the name of the project: ")
+    print("You chose the name: {}".format(project_name))
+    if not os.path.exists("projects/{}".format(project_name)):
+        os.makedirs("projects/{}".format(project_name))
+        os.makedirs("projects/{}/audios".format(project_name))
+        os.makedirs("projects/{}/summaries".format(project_name))
+        os.makedirs("projects/{}/transcriptions".format(project_name))
+        os.makedirs("projects/{}/videos".format(project_name))
+        print("Created the project folder: projects/{}".format(project_name))
+        print("Created the subfolders: audios, summaries, transcriptions, videos")
+        print("please copy your video, audio or text file to the project's folders.")
+        print("Then run the program again.")
+        exit(0)
+    else:
+        print("_____________________________________________________________")
 
-    OPENAI_API_KEY = "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    print("Choose an option to start from:")
+    print("1. Start from a video")
+    print("2. Start from an audio file")
+    print("3. Start from a text file")
+    print("4. Exit")
+    chosen_option = input("Enter your choice: ")
+    if chosen_option == "1":
+        print("You chose to start from a video")
+        videoName = input("Enter the name of the video file: ")
+        main(project=project_name,
+             video_name=videoName,
+             api_key=OPENAI_API_KEY,
+             option=int(chosen_option)
+             )
 
-    main(video_path=args.video_path,
-         api_key=OPENAI_API_KEY,
-         output_summary_path=args.output_summary_path,
-         audio_output_path=args.audio_output_path)
+    elif chosen_option == "2":
+        print("You chose to start from an audio file")
+        audioName = input("Enter the name to the audio file: ")
+        audioPath = "projects/{}/audios/{}".format(project_name, audioName)
+        main(project=project_name,
+             audio_path=audioPath,
+             api_key=OPENAI_API_KEY,
+             option=int(chosen_option)
+             )
+        print("_____________________________________________________________")
+
+    elif chosen_option == "3":
+        print("You chose to start from a text file")
+        transcriptionName = input("Enter the name to the text file: ")
+        transcriptionPath = "projects/{}/transcriptions/{}".format(project_name, transcriptionName)
+        main(project=project_name,
+             transcription_path=transcriptionPath,
+             api_key=OPENAI_API_KEY,
+             option=int(chosen_option)
+             )
+        print("_____________________________________________________________")
+
+    elif chosen_option == "4":
+        print("Goodbye!")
+        exit()

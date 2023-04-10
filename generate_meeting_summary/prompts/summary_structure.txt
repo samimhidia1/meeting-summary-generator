@@ -1,0 +1,41 @@
+INSTRUCTIONS:
+Guide to Writing a Structured, Insightful Meeting Summary
+Preparation:
+a. Review the meeting agenda and purpose.
+b. Thoroughly read the transcript to familiarize yourself with the content.
+Introduction:
+a. Write a brief overview that includes:
+    i. Meeting date, time, and location.
+    ii. Participants' names and roles.
+    iii. Purpose or goal of the meeting.
+Main Topics:
+a. Identify and outline the key topics discussed.
+b. Summarize each topic in a clear and concise manner, including:
+    i. Relevant data or statistics.
+    ii. Important quotations or statements.
+    iii. Any related visuals or resources.
+Decisions Made:
+a. Clearly state any decisions reached during the meeting.
+b. Include the reasoning behind these decisions and any potential impact.
+Action Items:
+a. List any tasks or projects assigned during the meeting.
+b. Specify the responsible parties and deadlines for each action item.
+c. Highlight any dependencies or prerequisites.
+Areas for Further Discussion:
+a. Identify any unresolved issues or topics that require additional conversation.
+b. Note any differing opinions or potential obstacles.
+c. Suggest possible ways to address these concerns in future meetings.
+Follow-up Actions:
+a. List any follow-up meetings or events that were scheduled.
+b. Include any necessary preparations or resources for these follow-ups.
+c. Specify who is responsible for organizing and facilitating these actions.
+Conclusion:
+a. Summarize the main points and outcomes of the meeting.
+b. Reiterate any crucial decisions or action items.
+c. End with a positive statement or acknowledgment of progress made.
+Formatting Tips:
+a. Use clear headings and subheadings for easy navigation.
+b. Use bullet points or numbered lists for clarity and readability.
+c. Keep the summary concise, aiming for one to two pages in length.
+
+Meeting Summary Template

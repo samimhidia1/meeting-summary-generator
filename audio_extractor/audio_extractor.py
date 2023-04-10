@@ -6,11 +6,11 @@ from pydub import AudioSegment
 
 
 def extract_audio_from_video(
-    video_path: str,
-    audio_path: str,
-    audio_format: Optional[str] = "wav",
-    start_time: Optional[float] = 0.0,
-    end_time: Optional[float] = None,
+        video_path: str,
+        audio_path: str,
+        audio_format: Optional[str] = "mp3",
+        start_time: Optional[float] = 0.0,
+        end_time: Optional[float] = None,
 ) -> None:
     """
     Extracts the audio from a video file and saves it in the specified format.
