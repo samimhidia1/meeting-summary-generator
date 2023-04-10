@@ -52,6 +52,8 @@ if __name__ == "__main__":
     print("To begin with Enter a name for your project.")
     project_name = input("Enter the name of the project: ")
     print("You chose the name: {}".format(project_name))
+    if not os.path.exists("projects"):
+        os.makedirs("projects")
     if not os.path.exists("projects/{}".format(project_name)):
         os.makedirs("projects/{}".format(project_name))
         os.makedirs("projects/{}/audios".format(project_name))
