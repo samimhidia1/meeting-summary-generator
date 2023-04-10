@@ -195,6 +195,10 @@ python -m unittest discover  tests
 - [MoviePy](https://zulko.github.io/moviepy)
 - [Pydub](https://github.com/jiaaro/pydub)
 
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
 ## Contact
 
 Sami Mhidia - sami.mhidia@jarvisator.com
