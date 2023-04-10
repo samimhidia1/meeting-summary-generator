@@ -54,6 +54,20 @@ python main.py
 
 The script will prompt you to enter the name of the project you want to generate a summary for. Enter the name of the project and press `Enter`.
 
+e.g. `Project MK-Ultra`
+
+If the project does not exist, the script will create a new project directory with the name you entered. The project directory will be created in the `projects` directory. 
+
+You will need to place the video file you want to extract the audio from in the `videos` directory of the project directory. The script will extract the audio from the video file and save it in the `audios` directory of the project directory. 
+
+If you want to start the process from an audio file or a text file, you will need to place the audio file or the text file in the `audios` or `transcriptions` directory of the project directory respectively.
+
+Once you have placed the video file, audio file, or text file in the appropriate directory, re-run the `main.py` script in your terminal:
+
+```bash
+python main.py
+```
+
 The script will then prompt you to choose between the following options:
 
 - `1`: Start from video file
