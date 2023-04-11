@@ -165,7 +165,7 @@ meeting_summary_generator/
 │   └── openai_api_interaction.py
 ├── pipelines.py
 ├── projects
-│   └── CISAM
+│   └── MK-Monarch
 │       ├── audios
 │       ├── summaries
 │       ├── transcriptions
