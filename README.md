@@ -11,8 +11,8 @@ The Meeting Summary Generator is a Python-based tool that extracts audio from an
 
 ## Requirements
 
-- Python 3.10 or higher
--  [OpenAI](https://openai.com)  API key
+- [Download Python](https://www.python.org/downloads/) 3.10 or higher 
+- Get an [OpenAI](https://openai.com)  API key
 
 ## Installation
 
@@ -28,13 +28,20 @@ The Meeting Summary Generator is a Python-based tool that extracts audio from an
 3. Create a virtual environment:
     
     ```bash
-    python -m venv venv
+    python3 -m venv venv
     ```
 4. Activate the virtual environment:
-    
+   * if you are using Windows:
+
     ```bash
+    venv\Scripts\activate
+    ```
+    * if you are using Linux or macOS:
+    
+     ```bash
     source venv/bin/activate
     ```
+
 5. Install the project dependencies:
     
     ```bash
@@ -44,7 +51,11 @@ The Meeting Summary Generator is a Python-based tool that extracts audio from an
 
 ## Usage
 
+### Setting up the OpenAI API key in the script
+
 At the line 45 of the `main.py` script, replace the value of the `OPENAI_API_KEY` variable with your OpenAI API key.
+
+### Running the script for the first time
 
 Run the `main.py` script in your terminal:
 
@@ -58,15 +69,33 @@ e.g. `Project MK-Ultra`
 
 If the project does not exist, the script will create a new project directory with the name you entered. The project directory will be created in the `projects` directory. 
 
-You will need to place the video file you want to extract the audio from in the `videos` directory of the project directory. The script will extract the audio from the video file and save it in the `audios` directory of the project directory. 
+### Adding a video file to an existing project
 
-If you want to start the process from an audio file or a text file, you will need to place the audio file or the text file in the `audios` or `transcriptions` directory of the project directory respectively.
+Place the video file you want to process in the `videos` directory of the project directory. 
+
+The script will extract the audio from the video file and save it in the `audios` directory of the project directory, and then it will transcribe the audio and save the transcription in the `transcriptions` directory of the project directory. Finally, it will generate a summary of the transcription and save it in the `summaries` directory of the project directory.
+
+### Adding an audio file to an existing project
+
+If you want to start the process from an audio file you will need to place the audio file in the `audios` directory of the project directory.
+
+The script will transcribe the audio and save the transcription in the `transcriptions` directory of the project directory. Finally, it will generate a summary of the transcription and a structured meeting summary from it and save both text files in the `summaries` directory of the project directory.
+
+### Adding a text file to an existing project
+
+If you want to start the process from a text file you will need to place the text file in the `transcriptions` directory of the project directory.
+
+The script will generate a summary of the transcription and a structured meeting summary from it and save both text files in the `summaries` directory of the project directory.
+
+### Running the script for an existing project after adding a video file, audio file, or text file
 
 Once you have placed the video file, audio file, or text file in the appropriate directory, re-run the `main.py` script in your terminal:
 
 ```bash
 python main.py
 ```
+
+Select the name of the project you want to generate a summary for and press `Enter`.
 
 The script will then prompt you to choose between the following options:
 
@@ -104,36 +133,55 @@ If you choose option 4, the script will exit.
 The generated summary is structured as follows:
 
 ```
+STRUCTURE:
 1. Meeting Objectives:
     a. Objective 1: [Brief description]
     b. Objective 2:
-    c. Objective 3:
+    .
+    .
+    .
+    c. Objective n:
 2. Key Discussion Points:
     a. Topic 1: [Brief summary of discussion]
         Main point 1
         Main point 2
-        Main point 3
+        ...
+        Main point n
     b. Topic 2:
         Main point 1
         Main point 2
-        Main point 3
-    c. Topic 3:
+        ...
+        Main point n
+    .
+    .
+    .
+    n. Topic n:
         Main point 1
         Main point 2
-        Main point 3
+        ...
+        Main point n
 3. Important Decisions:
     a. Decision 1: [Decision made and rationale]
     b. Decision 2:
-    c. Decision 3:
+    .
+    .
+    .
+    n. Decision n:
 4. Action Items:
     a. Action Item 1: [Task description] - [Deadline]
     b. Action Item 2:
-    c. Action Item 3:
+    .
+    .
+    .
+    n. Action Item n:
 5. Meeting Outcomes:
     a. Objective 1: [Status - Achieved/Partially Achieved/Not Achieved]
         [Key takeaways, insights, or progress made]
     b. Objective 2:
-    c. Objective 3:
+    .
+    .
+    .
+    n. Objective n:
 6. Next Steps:
     a. Next Meeting Date: [Next Meeting Date]
     b. Agenda Items for Next Meeting: [List of Agenda Items]
@@ -188,7 +236,6 @@ You can run the unit tests with the following command:
 ```bash
 python -m unittest discover  tests
 ```
-
 
 **Note:** Running the tests for `speech_transcriber` and `meeting_summarizer` will consume tokens from your OpenAI API quota, so use it judiciously to avoid running out of your allocated tokens.
 
