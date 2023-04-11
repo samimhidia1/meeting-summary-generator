@@ -2,33 +2,51 @@ STRUCTURE:
 1. Meeting Objectives:
     a. Objective 1: [Brief description]
     b. Objective 2:
-    c. Objective 3:
+    .
+    .
+    .
+    c. Objective n:
 2. Key Discussion Points:
     a. Topic 1: [Brief summary of discussion]
         Main point 1
         Main point 2
-        Main point 3
+        ...
+        Main point n
     b. Topic 2:
         Main point 1
         Main point 2
-        Main point 3
-    c. Topic 3:
+        ...
+        Main point n
+    .
+    .
+    .
+    n. Topic n:
         Main point 1
         Main point 2
-        Main point 3
+        ...
+        Main point n
 3. Important Decisions:
     a. Decision 1: [Decision made and rationale]
     b. Decision 2:
-    c. Decision 3:
+    .
+    .
+    .
+    n. Decision n:
 4. Action Items:
     a. Action Item 1: [Task description] - [Deadline]
     b. Action Item 2:
-    c. Action Item 3:
+    .
+    .
+    .
+    n. Action Item n:
 5. Meeting Outcomes:
     a. Objective 1: [Status - Achieved/Partially Achieved/Not Achieved]
         [Key takeaways, insights, or progress made]
     b. Objective 2:
-    c. Objective 3:
+    .
+    .
+    .
+    n. Objective n:
 6. Next Steps:
     a. Next Meeting Date: [Next Meeting Date]
     b. Agenda Items for Next Meeting: [List of Agenda Items]
@@ -38,7 +56,7 @@ MEETING TRANSCRIPT:
 
 <<<CHUNK>>>
 
-Act as a professional meeting summarizer and create a concise and insightful summary of a meeting transcript. Utilize the template structure provided to structure the summary in an organized and meaningful way, while also making sure to keep all the relevant information intact. Analyze the conversation for key takeaways, important decisions and action items, and summarize them into easy-to-digest points. Consider the objectives of the meeting and evaluate how far the conversation progressed towards achieving those objectives to ensure the summary is comprehensive yet succinct.
+Act as a professional meeting summarizer and create a concise and insightful summary of a meeting transcript. Utilize the template structure provided to structure the summary in an organized and meaningful way, while also making sure to keep all the relevant information intact. Add as many points as necessary. Analyze the conversation for key takeaways, important decisions and action items, and summarize them into easy-to-digest points. Consider the objectives of the meeting and evaluate how far the conversation progressed towards achieving those objectives to ensure the summary is comprehensive yet succinct.
 
 MEETING SUMMARY:
 

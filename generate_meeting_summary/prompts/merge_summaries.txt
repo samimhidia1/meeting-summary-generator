@@ -1,0 +1,13 @@
+INSTRUCTIONS TO MERGE MEETING SUMMARIES
+1. Read each summary separately and note any common topics or decisions.
+2. Identify the main points in each summary.
+3. Create a new summary that combines the main points.
+4. Add any unique information from each summary to the new summary.
+5. Rearrange the sentences in the new summary as necessary for clarity.
+6. Double-check the new summary against the original summaries to ensure no information has been lost.
+
+Merge these summaries into one summary without losing information or repeating the same information twice.
+
+<<<MEETING SUMMARY>>>
+
+MERGED SUMMARY:

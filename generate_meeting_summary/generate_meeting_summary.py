@@ -35,7 +35,23 @@ def generate_meeting_summary(
         num_token_completion=config.max_tokens
     )
 
-    if len(prompts) < 20:
+    if len(prompts) == 1:
+        response = openai.Completion.create(
+            model=config.model,
+            prompt=prompts[0],
+            max_tokens=config.max_tokens,
+            temperature=config.temperature,
+            top_p=config.top_p,
+            n=config.n,
+            echo=config.echo,
+            stop=config.stop,
+            presence_penalty=config.presence_penalty,
+            frequency_penalty=config.frequency_penalty,
+        )
+        summary = response.choices[0]["text"].strip()
+        return summary
+
+    elif len(prompts) < 20:
         response = openai.Completion.create(
             model=config.model,
             prompt=prompts,
@@ -49,8 +65,9 @@ def generate_meeting_summary(
             frequency_penalty=config.frequency_penalty,
         )
         summary = [choice["text"].strip() for choice in response.choices]
-        summary = "\n ________________\n".join(summary)
+        summary = merge_summaries(summary)
         return summary
+
     else:
         responses = []
         for i in range(0, len(prompts), 20):
@@ -70,5 +87,39 @@ def generate_meeting_summary(
             )
             summary = [choice["text"].strip() for choice in response.choices]
             responses += summary
-        summary = "\n ________________\n".join(responses)
+        summary = merge_summaries(responses)
         return summary
+
+
+def merge_summaries(summaries: list) -> str:
+    """
+    Merges a list of summaries into a single summary.
+    Parameters
+    ----------
+    summaries : list
+        A list of summaries.
+
+    Returns
+    -------
+    str
+        The merged summary.
+    """
+    prompt_merging = open("prompts/merge_summaries.txt", "r", encoding='utf-8').read()
+    summaries_to_merge = ""
+    for i, summary in enumerate(summaries):
+        summaries_to_merge += "MEETING SUMMARY {} :".format(str(i+1)) + "\n" + summary + "\n"
+    prompt = prompt_merging.replace("<<<MEETING SUMMARY>>>", summaries_to_merge)
+    response = openai.Completion.create(
+        model="text-davinci-003",
+        prompt=prompt,
+        max_tokens=1000,
+        temperature=0.7,
+        top_p=1,
+        n=1,
+        presence_penalty=0.6,
+        frequency_penalty=0.3,
+        best_of=3,
+    )
+    merged_summary = response.choices[0]["text"].strip()
+    return merged_summary
+
