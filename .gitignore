@@ -6,3 +6,4 @@ outputs/audios/*.mp3
 outputs/audios/*.wav
 outputs/summaries/*.txt
 outputs/transcriptions/*.txt
+venv/
