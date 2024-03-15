@@ -7,3 +7,5 @@ outputs/audios/*.wav
 outputs/summaries/*.txt
 outputs/transcriptions/*.txt
 venv/
+.vscode
+__pycache__/
