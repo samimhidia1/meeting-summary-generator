@@ -1,13 +1,12 @@
 import openai
-
 from meeting_summarizer.utils import create_messages_from_transcripts
 from openai_api_interaction import OpenAICompletionAPI
-
+from config import OPENAI_API_KEY, MAX_TOKENS_SUMMARY, TEMPERATURE, PRESENCE_PENALTY, FREQUENCY_PENALTY, PROMPT_TEMPLATE_SUMMARY
 
 def generate_meeting_summary(
         summary: str,
         config: OpenAICompletionAPI,
-        prompt_template: str,
+        prompt_template: str = PROMPT_TEMPLATE_SUMMARY,
 ) -> str:
     """
     Generates a meeting summary using OpenAI's Completion API.
@@ -25,7 +24,7 @@ def generate_meeting_summary(
     str
         The generated meeting summary.
     """
-    openai.api_key = config.api_key
+    openai.api_key = OPENAI_API_KEY
 
     # Create the messages
     messages = create_messages_from_transcripts(
@@ -42,11 +41,11 @@ def generate_meeting_summary(
                 {"role": "user", "content": messages[0]["content"]}
             ],
             max_tokens=config.max_tokens,
-            temperature=config.temperature,
+            temperature=TEMPERATURE,
             top_p=config.top_p,
             n=config.n,
-            presence_penalty=config.presence_penalty,
-            frequency_penalty=config.frequency_penalty,
+            presence_penalty=PRESENCE_PENALTY,
+            frequency_penalty=FREQUENCY_PENALTY,
         )
         summary = response.choices[0]["message"]["content"].strip()
         return summary
@@ -60,11 +59,11 @@ def generate_meeting_summary(
                     [msg["content"] for msg in messages])}
             ],
             max_tokens=config.max_tokens,
-            temperature=config.temperature,
+            temperature=TEMPERATURE,
             top_p=config.top_p,
             n=config.n,
-            presence_penalty=config.presence_penalty,
-            frequency_penalty=config.frequency_penalty,
+            presence_penalty=PRESENCE_PENALTY,
+            frequency_penalty=FREQUENCY_PENALTY,
         )
         summary = [choice["message"]["content"].strip()
                    for choice in response.choices]
@@ -82,12 +81,12 @@ def generate_meeting_summary(
                         [msg["content"] for msg in messages[i:i + 20]])}
                 ],
                 max_tokens=config.max_tokens,
-                temperature=config.temperature,
+                temperature=TEMPERATURE,
                 top_p=config.top_p,
                 n=config.n,
                 stream=config.stream,
-                presence_penalty=config.presence_penalty,
-                frequency_penalty=config.frequency_penalty,
+                presence_penalty=PRESENCE_PENALTY,
+                frequency_penalty=FREQUENCY_PENALTY,
             )
             summary = [choice["message"]["content"].strip()
                        for choice in response.choices]
@@ -126,11 +125,11 @@ def merge_summaries(summaries: list, config: OpenAICompletionAPI) -> str:
             {"role": "user", "content": prompt}
         ],
         max_tokens=config.max_tokens,
-        temperature=config.temperature,
+        temperature=TEMPERATURE,
         top_p=config.top_p,
         n=config.n,
-        presence_penalty=config.presence_penalty,
-        frequency_penalty=config.frequency_penalty,
+        presence_penalty=PRESENCE_PENALTY,
+        frequency_penalty=FREQUENCY_PENALTY,
     )
     merged_summary = response.choices[0]["message"]["content"].strip()
     return merged_summary
