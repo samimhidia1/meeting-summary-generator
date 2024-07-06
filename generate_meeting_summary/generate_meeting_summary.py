@@ -26,7 +26,6 @@ def generate_meeting_summary(
         The generated meeting summary.
     """
     openai.api_key = config.api_key
-    client = openai.OpenAI()
 
     # Create the messages
     messages = create_messages_from_transcripts(
@@ -36,7 +35,7 @@ def generate_meeting_summary(
     )
 
     if len(messages) == 1:
-        response = client.chat.completions.create(
+        response = openai.ChatCompletion.create(
             model=config.model,
             messages=[
                 {"role": "system", "content": "You are a helpful assistant."},
@@ -53,7 +52,7 @@ def generate_meeting_summary(
         return summary
 
     elif len(messages) < 20:
-        response = client.chat.completions.create(
+        response = openai.ChatCompletion.create(
             model=config.model,
             messages=[
                 {"role": "system", "content": "You are a helpful assistant."},
@@ -67,13 +66,13 @@ def generate_meeting_summary(
             frequency_penalty=config.frequency_penalty,
         )
         summary = [choice["message"]["content"].strip() for choice in response.choices]
-        summary = merge_summaries(summary)
+        summary = merge_summaries(summary, config)
         return summary
 
     else:
         responses = []
         for i in range(0, len(messages), 20):
-            response = client.chat.completions.create(
+            response = openai.ChatCompletion.create(
                 model=config.model,
                 messages=[
                     {"role": "system", "content": "You are a helpful assistant."},
@@ -89,17 +88,19 @@ def generate_meeting_summary(
             )
             summary = [choice["message"]["content"].strip() for choice in response.choices]
             responses += summary
-        summary = merge_summaries(responses)
+        summary = merge_summaries(responses, config)
         return summary
 
 
-def merge_summaries(summaries: list) -> str:
+def merge_summaries(summaries: list, config: OpenAICompletionAPI) -> str:
     """
     Merges a list of summaries into a single summary.
     Parameters
     ----------
     summaries : list
         A list of summaries.
+    config : OpenAICompletionAPI
+        The configuration for the OpenAI Completion API.
 
     Returns
     -------
@@ -111,18 +112,18 @@ def merge_summaries(summaries: list) -> str:
     for i, summary in enumerate(summaries):
         summaries_to_merge += "MEETING SUMMARY {} :".format(str(i+1)) + "\n" + summary + "\n"
     prompt = prompt_merging.replace("<<<MEETING SUMMARY>>>", summaries_to_merge)
-    response = client.chat.completions.create(
-        model="gpt-4o",
+    response = openai.ChatCompletion.create(
+        model=config.model,
         messages=[
             {"role": "system", "content": "You are a helpful assistant."},
             {"role": "user", "content": prompt}
         ],
-        max_tokens=4000,
-        temperature=0.7,
-        top_p=1,
-        n=1,
-        presence_penalty=0.6,
-        frequency_penalty=0.3,
+        max_tokens=config.max_tokens,
+        temperature=config.temperature,
+        top_p=config.top_p,
+        n=config.n,
+        presence_penalty=config.presence_penalty,
+        frequency_penalty=config.frequency_penalty,
     )
     merged_summary = response.choices[0]["message"]["content"].strip()
     return merged_summary
