@@ -54,6 +54,25 @@ Alternatively, you can use the provided setup script to automate the creation of
 ./setup.sh
 ```
 
+## Setting Up the Test Environment
+
+1. **Set up the OpenAI API key:**
+   Export the OpenAI API key as an environment variable. This key is required for running the tests.
+
+   ```bash
+   export OPENAI_API_KEY="your-openai-api-key"
+   ```
+
+2. **Prepare the test input files:**
+   Ensure that the `tests/inputs` directory contains the necessary sample audio and video files for running the tests. You can create placeholder files if needed.
+
+   ```bash
+   mkdir -p tests/inputs/audios
+   touch tests/inputs/audios/sample_audio.wav
+   touch tests/inputs/sample_video.mp4
+   touch tests/inputs/sample_video_with_frame.mp4
+   ```
+
 ## Usage
 
 ### Quick Start Guide
