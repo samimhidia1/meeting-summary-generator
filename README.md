@@ -542,6 +542,19 @@ PYTHONPATH=src pytest
 ```
 
 This will run all the tests in the `tests` directory, including the new tests that have been created.
+
+## Setup Script
+
+The `setup.sh` script automates the creation of the virtual environment and installation of dependencies. Before running the script, ensure that the `OPENAI_API_KEY` environment variable is set:
+
+```bash
+export OPENAI_API_KEY="your-openai-api-key"
+```
+
+To use the script, run the following command:
+
+```bash
+./setup.sh
 ```
 
 ## Testing
@@ -567,13 +580,6 @@ PYTHONPATH=src pytest
 ```
 
 This will run all the tests in the `tests` directory, including the new tests that have been created.
-
-## Setup Script
-
-The `setup.sh` script automates the creation of the virtual environment and installation of dependencies. To use the script, run the following command:
-
-```bash
-./setup.sh
 ```
 
 The script will create a virtual environment, activate it, and install the required dependencies from the `requirements.txt` file.
