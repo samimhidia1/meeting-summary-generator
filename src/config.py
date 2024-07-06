@@ -3,7 +3,7 @@ import os
 # Configuration settings for the project
 
 # OpenAI API settings
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "your_openai_api_key_here")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 MAX_TOKENS_SUMMARY = 4000
 MAX_TOKENS_MEETING_SUMMARY = 2000
 TEMPERATURE = 0.5

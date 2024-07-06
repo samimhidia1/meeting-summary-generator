@@ -1,4 +1,5 @@
 import unittest
+import os
 from speech_transcriber import transcribe_audio
 from openai_api_interaction import OpenAIAudioAPI
 
@@ -12,8 +13,9 @@ class TestSpeechTranscriber(unittest.TestCase):
         """
         Test if the audio is successfully transcribed.
         """
-        api_key = "your_openai_api_key"
-        audio_path = "inputs/audios/sample_audio.wav"
+        api_key = os.getenv("OPENAI_API_KEY")
+        base_test_dir = "tests/inputs"
+        audio_path = os.path.join(base_test_dir, "sample_audio.wav")
         config = OpenAIAudioAPI(
             api_key=api_key,
             file_path=audio_path,

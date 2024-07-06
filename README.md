@@ -78,10 +78,10 @@ Alternatively, you can use the provided setup script to automate the creation of
 ### Quick Start Guide
 
 1. **Set up the OpenAI API key:**
-   Create a file named `openai_apikey.txt` in the root directory of the project and add your OpenAI API key to this file. The `main.py` script will read the API key from this file.
+   Export the OpenAI API key as an environment variable. This key is required for running the application.
 
    ```bash
-   echo "your-openai-api-key" > openai_apikey.txt
+   export OPENAI_API_KEY="your-openai-api-key"
    ```
 
 2. **Run the script for the first time:**
@@ -284,11 +284,13 @@ If you would like to contribute to this project, please follow these steps:
 
 ## Securing the OpenAI API Key
 
-To keep your OpenAI API key secure, do not commit it to version control. Instead, store it in a file named `openai_apikey.txt` in the root directory of the project. The `main.py` script will read the API key from this file.
+To keep your OpenAI API key secure, do not commit it to version control. Instead, set it as an environment variable. You can do this by exporting the API key in your terminal session:
 
 ```bash
-echo "your-openai-api-key" > openai_apikey.txt
+export OPENAI_API_KEY="your-openai-api-key"
 ```
+
+**Note:** To persist the environment variable across sessions, you can add the export command to your shell's profile file (e.g., `~/.bashrc`, `~/.zshrc`).
 
 ## Requirements
 
@@ -521,6 +523,12 @@ meeting_summary_generator/
 
 ## Testing
 
+Before running the tests, ensure that the `OPENAI_API_KEY` environment variable is set:
+
+```bash
+export OPENAI_API_KEY="your-openai-api-key"
+```
+
 You can run the unit tests with the following command:
 
 ```bash
@@ -536,6 +544,7 @@ PYTHONPATH=src pytest
 ```
 
 This will run all the tests in the `tests` directory, including the new tests that have been created.
+
 ## Setup Script
 
 The `setup.sh` script automates the creation of the virtual environment and installation of dependencies. To use the script, run the following command:
