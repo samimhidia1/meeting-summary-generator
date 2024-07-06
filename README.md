@@ -11,8 +11,8 @@ The Meeting Summary Generator is a Python-based tool that extracts audio from an
 
 ## Requirements
 
-- [Download Python](https://www.python.org/downloads/) 3.10 or higher
-- Get an [OpenAI](https://openai.com)  API key
+- [Download Python](https://www.python.org/downloads/) 3.10 or higher (required for compatibility with certain libraries and features)
+- Get an [OpenAI](https://openai.com) API key (keep this key secure and do not commit it to version control)
 
 ## Installation
 
@@ -31,14 +31,14 @@ The Meeting Summary Generator is a Python-based tool that extracts audio from an
     python3 -m venv venv
     ```
 4. Activate the virtual environment:
-   * if you are using Windows:
+    * if you are using Windows:
 
     ```bash
     venv\Scripts\activate
     ```
     * if you are using Linux or macOS:
 
-     ```bash
+    ```bash
     source venv/bin/activate
     ```
 
