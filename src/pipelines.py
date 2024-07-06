@@ -3,11 +3,17 @@ from generate_meeting_summary import generate_meeting_summary
 from meeting_summarizer import summarize_transcription
 from openai_api_interaction import OpenAIAudioAPI, OpenAICompletionAPI
 from speech_transcriber import transcribe_audio
+import config
 
 
 def save_text(text, output_path):
     with open(output_path, "w", encoding='utf-8') as transcription_file:
         transcription_file.write(text)
+
+
+def read_prompt_template(file_path):
+    with open(file_path, "r", encoding='utf-8') as file:
+        return file.read()
 
 
 def video_to_summary(
@@ -92,10 +98,10 @@ def text_to_summary(
     # Step 1: Summarize the meeting transcription
     print("Summarizing the meeting transcription...")
     configSummary = OpenAICompletionAPI(api_key=api_key,
-                                        max_tokens=777,
-                                        temperature=0.5,
-                                        presence_penalty=0.7,
-                                        frequency_penalty=0.4,
+                                        max_tokens=config.MAX_TOKENS_SUMMARY,
+                                        temperature=config.TEMPERATURE,
+                                        presence_penalty=config.PRESENCE_PENALTY,
+                                        frequency_penalty=config.FREQUENCY_PENALTY,
                                         messages=[{"role": "system", "content": "You are a helpful assistant."},
                                                   {"role": "user", "content": transcription}])
     summary = summarize_transcription(transcriptions=transcription,
@@ -106,11 +112,10 @@ def text_to_summary(
     print(f"Transcriptions summary saved to: {output_summary_path}")
 
     # Step 2: Generate the meeting summary
-    with open("generate_meeting_summary/prompts/summary_structure_2.txt", "r", encoding='utf-8') as file:
-        prompt_template_meeting_summary = file.read()
+    prompt_template_meeting_summary = read_prompt_template(config.PROMPT_TEMPLATE_SUMMARY)
     print("Generating the meeting summary...")
     configMeetingSummary = OpenAICompletionAPI(api_key=api_key,
-                                               max_tokens=2000,
+                                               max_tokens=config.MAX_TOKENS_MEETING_SUMMARY,
                                                messages=[{"role": "system", "content": "You are a helpful assistant."},
                                                          {"role": "user", "content": summary}])
     meeting_summary = generate_meeting_summary(summary=summary,
