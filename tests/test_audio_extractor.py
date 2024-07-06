@@ -1,6 +1,6 @@
 import os
 import unittest
-from audio_extractor import extract_audio_from_video
+from src.audio_extractor.audio_extractor import extract_audio_from_video
 
 
 class TestAudioExtractor(unittest.TestCase):
@@ -12,8 +12,8 @@ class TestAudioExtractor(unittest.TestCase):
         """
         Test if the audio is successfully extracted from the video.
         """
-        input_video = "inputs/videos/sample_video.mp4"
-        output_audio = "outputs/audios/sample_audio.wav"
+        input_video = "tests/inputs/sample_video.mp4"
+        output_audio = "tests/outputs/sample_audio.wav"
 
         extract_audio_from_video(input_video, output_audio)
 
