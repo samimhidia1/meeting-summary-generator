@@ -56,85 +56,83 @@ Alternatively, you can use the provided setup script to automate the creation of
 
 ## Usage
 
-### Setting up the OpenAI API key
+### Quick Start Guide
 
-Create a file named `openai_apikey.txt` in the root directory of the project and add your OpenAI API key to this file. The `main.py` script will read the API key from this file.
+1. **Set up the OpenAI API key:**
+   Create a file named `openai_apikey.txt` in the root directory of the project and add your OpenAI API key to this file. The `main.py` script will read the API key from this file.
 
-```bash
-echo "your-openai-api-key" > openai_apikey.txt
-```
+   ```bash
+   echo "your-openai-api-key" > openai_apikey.txt
+   ```
 
-### Running the script for the first time
+2. **Run the script for the first time:**
+   Run the `main.py` script in your terminal:
 
-Run the `main.py` script in your terminal:
+   ```bash
+   python main.py
+   ```
 
-```bash
-python main.py
-```
+   The script will prompt you to enter the name of the project you want to generate a summary for. Enter the name of the project and press `Enter`.
 
-The script will prompt you to enter the name of the project you want to generate a summary for. Enter the name of the project and press `Enter`.
+   e.g. `Project MK-Ultra`
 
-e.g. `Project MK-Ultra`
+   If the project does not exist, the script will create a new project directory with the name you entered. The project directory will be created in the `projects` directory.
 
-If the project does not exist, the script will create a new project directory with the name you entered. The project directory will be created in the `projects` directory.
+### Detailed Usage Instructions
 
-### Adding a video file to an existing project
+#### Adding a video file to an existing project
 
-Place the video file you want to process in the `videos` directory of the project directory.
+1. Place the video file you want to process in the `videos` directory of the project directory.
+2. The script will extract the audio from the video file and save it in the `audios` directory of the project directory.
+3. The script will transcribe the audio and save the transcription in the `transcriptions` directory of the project directory.
+4. Finally, the script will generate a summary of the transcription and save it in the `summaries` directory of the project directory.
 
-The script will extract the audio from the video file and save it in the `audios` directory of the project directory, and then it will transcribe the audio and save the transcription in the `transcriptions` directory of the project directory. Finally, it will generate a summary of the transcription and save it in the `summaries` directory of the project directory.
+#### Adding an audio file to an existing project
 
-### Adding an audio file to an existing project
+1. Place the audio file you want to process in the `audios` directory of the project directory.
+2. The script will transcribe the audio and save the transcription in the `transcriptions` directory of the project directory.
+3. Finally, the script will generate a summary of the transcription and a structured meeting summary from it and save both text files in the `summaries` directory of the project directory.
 
-If you want to start the process from an audio file you will need to place the audio file in the `audios` directory of the project directory.
+#### Adding a text file to an existing project
 
-The script will transcribe the audio and save the transcription in the `transcriptions` directory of the project directory. Finally, it will generate a summary of the transcription and a structured meeting summary from it and save both text files in the `summaries` directory of the project directory.
-
-### Adding a text file to an existing project
-
-If you want to start the process from a text file you will need to place the text file in the `transcriptions` directory of the project directory.
-
-The script will generate a summary of the transcription and a structured meeting summary from it and save both text files in the `summaries` directory of the project directory.
+1. Place the text file you want to process in the `transcriptions` directory of the project directory.
+2. The script will generate a summary of the transcription and a structured meeting summary from it and save both text files in the `summaries` directory of the project directory.
 
 ### Running the script for an existing project after adding a video file, audio file, or text file
 
-Once you have placed the video file, audio file, or text file in the appropriate directory, re-run the `main.py` script in your terminal:
+1. Once you have placed the video file, audio file, or text file in the appropriate directory, re-run the `main.py` script in your terminal:
 
-```bash
-python main.py
-```
+   ```bash
+   python main.py
+   ```
 
-Select the name of the project you want to generate a summary for and press `Enter`.
+2. Select the name of the project you want to generate a summary for and press `Enter`.
 
-The script will then prompt you to choose between the following options:
+3. The script will then prompt you to choose between the following options:
 
-- `1`: Start from video file
-- `2`: Start from an audio file
-- `3`: Start from a text file
-- `4`: Exit
+   - `1`: Start from video file
+   - `2`: Start from an audio file
+   - `3`: Start from a text file
+   - `4`: Exit
 
-Choose the option that best suits your needs and press `Enter`.
+4. Choose the option that best suits your needs and press `Enter.
 
-### Option 1: Start from video file
-
+#### Option 1: Start from video file
 If you choose option 1, the script will prompt you to enter the name of the video file you want to extract the audio from. Enter the name of the video file with the extension and press `Enter`.
 
 e.g. `meeting.mp4`
 
-### Option 2: Start from an audio file
-
+#### Option 2: Start from an audio file
 If you choose option 2, the script will prompt you to enter the name of the audio file you want to transcribe. Enter the name of the audio file with the extension and press `Enter`.
 
 e.g. `meeting.wav`
 
-### Option 3: Start from a text file
-
+#### Option 3: Start from a text file
 If you choose option 3, the script will prompt you to enter the name of the text file you want to summarize. Enter the name of the text file with the extension and press `Enter`.
 
 e.g. `meeting.txt`
 
-### Option 4: Exit
-
+#### Option 4: Exit
 If you choose option 4, the script will exit.
 
 ## Structure of the generated summary
