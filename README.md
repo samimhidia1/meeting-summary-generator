@@ -243,7 +243,7 @@ meeting_summary_generator/
 You can run the unit tests with the following command:
 
 ```bash
-python -m unittest discover  tests
+PYTHONPATH=src python -m unittest discover tests
 ```
 
 **Note:** Running the tests for `speech_transcriber` and `meeting_summarizer` will consume tokens from your OpenAI API quota, so use it judiciously to avoid running out of your allocated tokens.
@@ -251,7 +251,7 @@ python -m unittest discover  tests
 To run the new tests, use the following command:
 
 ```bash
-pytest
+PYTHONPATH=src pytest
 ```
 
 This will run all the tests in the `tests` directory, including the new tests that have been created.
