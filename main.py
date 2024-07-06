@@ -42,6 +42,8 @@ def main(
 
 if __name__ == "__main__":
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+    if not OPENAI_API_KEY:
+        raise EnvironmentError("The OPENAI_API_KEY environment variable is not set. Please set it before running the script.")
 
     print("Welcome to the meeting summarizer!")
     print("This program will summarize a meeting from a video, audio file, or text file.")
