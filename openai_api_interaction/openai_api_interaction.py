@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, List, Dict
 
 
 @dataclass
@@ -46,13 +46,11 @@ class OpenAICompletionAPI:
     api_key : str
         The OpenAI API key.
     model : Optional[str], optional
-        The model to use for completion, by default "text-davinci-003"
-    prompt : Optional[str], optional
-        The prompt to use for completion, by default None
-    suffix : Optional[str], optional
-        The suffix to use for completion, by default None
+        The model to use for completion, by default "gpt-4o"
+    messages : Optional[List[Dict[str, str]]], optional
+        The messages to use for chat completion, by default None
     max_tokens : Optional[int], optional
-        The maximum number of tokens to use for completion, by default 150
+        The maximum number of tokens to use for completion, by default 128000
     temperature : Optional[float], optional
         The temperature to use for completion, by default 0.7
     top_p : Optional[float], optional
@@ -63,16 +61,10 @@ class OpenAICompletionAPI:
         Whether to stream the completion, by default False
     logprobs : Optional[int], optional
         The logprobs to use for completion, by default None
-    echo : Optional[bool], optional
-        Whether to echo the completion, by default False
-    stop : Optional[str], optional
-        The stop to use for completion, by default None
     presence_penalty : Optional[float], optional
         The presence penalty to use for completion, by default 0.0
     frequency_penalty : Optional[float], optional
         The frequency penalty to use for completion, by default 0.0
-    best_of : Optional[int], optional
-        The best of to use for completion, by default 1
 
     Returns
     -------
@@ -80,17 +72,13 @@ class OpenAICompletionAPI:
         The OpenAI Completion API configuration.
     """
     api_key: str
-    model: Optional[str] = "text-davinci-003"
-    prompt: Optional[str] = None
-    suffix: Optional[str] = None
-    max_tokens: Optional[int] = 150
+    model: Optional[str] = "gpt-4o"
+    messages: Optional[List[Dict[str, str]]] = None
+    max_tokens: Optional[int] = 128000
     temperature: Optional[float] = 0.7
     top_p: Optional[float] = 1.0
     n: Optional[int] = 1
     stream: Optional[bool] = False
     logprobs: Optional[int] = None
-    echo: Optional[bool] = False
-    stop: Optional[str] = None
     presence_penalty: Optional[float] = 0.0
     frequency_penalty: Optional[float] = 0.0
-    best_of: Optional[int] = 1

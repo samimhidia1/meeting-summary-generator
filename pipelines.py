@@ -97,10 +97,11 @@ def text_to_summary(
                                         max_tokens=777,
                                         temperature=0.5,
                                         presence_penalty=0.7,
-                                        frequency_penalty=0.4)
+                                        frequency_penalty=0.4,
+                                        messages=[{"role": "system", "content": "You are a helpful assistant."},
+                                                  {"role": "user", "content": transcription}])
     summary = summarize_transcription(transcriptions=transcription,
-                                      config=configSummary,
-                                      prompt_template=prompt_template_summarize)
+                                      config=configSummary)
     text_name = name
     output_summary_path = "projects/{}/summaries/summary_{}.txt".format(project, text_name)
     save_text(summary, output_summary_path)
@@ -112,7 +113,9 @@ def text_to_summary(
                                            "r", encoding='utf-8').read()
     print("Generating the meeting summary...")
     configMeetingSummary = OpenAICompletionAPI(api_key=api_key,
-                                               max_tokens=2000)
+                                               max_tokens=2000,
+                                               messages=[{"role": "system", "content": "You are a helpful assistant."},
+                                                         {"role": "user", "content": summary}])
     meeting_summary = generate_meeting_summary(summary=summary,
                                                config=configMeetingSummary,
                                                prompt_template=prompt_template_meeting_summary)
