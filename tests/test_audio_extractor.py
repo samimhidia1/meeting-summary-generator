@@ -12,10 +12,13 @@ class TestAudioExtractor(unittest.TestCase):
         """
         Test if the audio is successfully extracted from the video.
         """
-        input_video = "tests/inputs/sample_video.mp4"
+        input_video = "tests/inputs/sample_video_with_frame.mp4"
         output_audio = "tests/outputs/sample_audio.wav"
 
-        extract_audio_from_video(input_video, output_audio)
+        try:
+            extract_audio_from_video(input_video, output_audio)
+        except KeyError as e:
+            self.fail(f"KeyError encountered: {e}")
 
         self.assertTrue(os.path.exists(output_audio))
 
