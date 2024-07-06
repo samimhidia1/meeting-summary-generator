@@ -43,7 +43,8 @@ def extract_audio_from_video(
     audio.write_audiofile(temp_audio_path, codec=audio_format)
 
     # Convert the temporary audio file to the desired format and save it
-    audio_segment = AudioSegment.from_file(temp_audio_path, format=audio_format)
+    audio_segment = AudioSegment.from_file(
+        temp_audio_path, format=audio_format)
     audio_segment.export(audio_path, format=audio_format)
 
     # Remove the temporary audio file

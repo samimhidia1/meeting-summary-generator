@@ -63,12 +63,14 @@ def create_messages_from_transcripts(
                              }
 
     token_limit = token_limit_per_model[model]
-    num_tokens_in_transcriptions = count_tokens(text=transcriptions, model=model)
+    num_tokens_in_transcriptions = count_tokens(
+        text=transcriptions, model=model)
     num_tokens_without_transcription = num_token_completion
     num_token_left = token_limit - num_tokens_without_transcription
     number_of_chunks = num_tokens_in_transcriptions // num_token_left + 1
 
-    list_of_messages = [{"role": "system", "content": "You are a helpful assistant. Please summarize the following meeting points:"}]
+    list_of_messages = [
+        {"role": "system", "content": "You are a helpful assistant. Please summarize the following meeting points:"}]
 
     for i in range(number_of_chunks):
         start = i * num_token_left

@@ -56,7 +56,8 @@ def generate_meeting_summary(
             model=config.model,
             messages=[
                 {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": "\n".join([msg["content"] for msg in messages])}
+                {"role": "user", "content": "\n".join(
+                    [msg["content"] for msg in messages])}
             ],
             max_tokens=config.max_tokens,
             temperature=config.temperature,
@@ -65,7 +66,8 @@ def generate_meeting_summary(
             presence_penalty=config.presence_penalty,
             frequency_penalty=config.frequency_penalty,
         )
-        summary = [choice["message"]["content"].strip() for choice in response.choices]
+        summary = [choice["message"]["content"].strip()
+                   for choice in response.choices]
         summary = merge_summaries(summary, config)
         return summary
 
@@ -76,7 +78,8 @@ def generate_meeting_summary(
                 model=config.model,
                 messages=[
                     {"role": "system", "content": "You are a helpful assistant."},
-                    {"role": "user", "content": "\n".join([msg["content"] for msg in messages[i:i + 20]])}
+                    {"role": "user", "content": "\n".join(
+                        [msg["content"] for msg in messages[i:i + 20]])}
                 ],
                 max_tokens=config.max_tokens,
                 temperature=config.temperature,
@@ -86,7 +89,8 @@ def generate_meeting_summary(
                 presence_penalty=config.presence_penalty,
                 frequency_penalty=config.frequency_penalty,
             )
-            summary = [choice["message"]["content"].strip() for choice in response.choices]
+            summary = [choice["message"]["content"].strip()
+                       for choice in response.choices]
             responses += summary
         summary = merge_summaries(responses, config)
         return summary
@@ -107,11 +111,14 @@ def merge_summaries(summaries: list, config: OpenAICompletionAPI) -> str:
     str
         The merged summary.
     """
-    prompt_merging = open("prompts/merge_summaries.txt", "r", encoding='utf-8').read()
+    prompt_merging = open("prompts/merge_summaries.txt",
+                          "r", encoding='utf-8').read()
     summaries_to_merge = ""
     for i, summary in enumerate(summaries):
-        summaries_to_merge += "MEETING SUMMARY {} :".format(str(i+1)) + "\n" + summary + "\n"
-    prompt = prompt_merging.replace("<<<MEETING SUMMARY>>>", summaries_to_merge)
+        summaries_to_merge += "MEETING SUMMARY {} :".format(
+            str(i+1)) + "\n" + summary + "\n"
+    prompt = prompt_merging.replace(
+        "<<<MEETING SUMMARY>>>", summaries_to_merge)
     response = openai.ChatCompletion.create(
         model=config.model,
         messages=[

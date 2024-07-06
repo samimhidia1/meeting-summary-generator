@@ -31,7 +31,8 @@ def video_to_summary(
 
     print(f"Extracting audio from: {video_name} ...")
     video_path = "projects/{}/videos/{}".format(project, video_name)
-    audio_output_path = "projects/{}/audios/{}.wav".format(project, video_name.split(".")[0])
+    audio_output_path = "projects/{}/audios/{}.wav".format(
+        project, video_name.split(".")[0])
     extract_audio_from_video(video_path, audio_output_path)
     print(f"Audio extracted and saved to: {audio_output_path}")
 
@@ -61,7 +62,8 @@ def audio_to_summary(
     configAudio = OpenAIAudioAPI(api_key=api_key, file_path=audio_path)
     transcription = transcribe_audio(configAudio)
     audio_name = audio_path.split("/")[-1].split(".")[0]
-    output_transcription_path = "projects/{}/transcriptions/transcription_{}.txt".format(project, audio_name)
+    output_transcription_path = "projects/{}/transcriptions/transcription_{}.txt".format(
+        project, audio_name)
     save_text(transcription, output_transcription_path)
     print("Transcription from the audio completed.")
 
@@ -103,7 +105,8 @@ def text_to_summary(
     summary = summarize_transcription(transcriptions=transcription,
                                       config=configSummary)
     text_name = name
-    output_summary_path = "projects/{}/summaries/summary_{}.txt".format(project, text_name)
+    output_summary_path = "projects/{}/summaries/summary_{}.txt".format(
+        project, text_name)
     save_text(summary, output_summary_path)
     print("Summary of transcriptions completed.")
     print(f"Transcriptions summary saved to: {output_summary_path}")
@@ -119,7 +122,8 @@ def text_to_summary(
     meeting_summary = generate_meeting_summary(summary=summary,
                                                config=configMeetingSummary,
                                                prompt_template=prompt_template_meeting_summary)
-    output_meeting_summary_path = "projects/{}/summaries/meeting_summary_{}.txt".format(project, text_name)
+    output_meeting_summary_path = "projects/{}/summaries/meeting_summary_{}.txt".format(
+        project, text_name)
     save_text(meeting_summary, output_meeting_summary_path)
     print("Meeting summary completed.")
     print(f"Meeting summary saved to: {output_meeting_summary_path}")
