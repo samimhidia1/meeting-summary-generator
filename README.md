@@ -251,7 +251,7 @@ meeting_summary_generator/
 ├── README.md
 ├── requirements.txt
 ├── temp
-└── tests
+└─ tests
     ├── test_audio_extractor.py
     ├── test_meeting_summarizer.py
     └── test_speech_transcriber.py
@@ -342,10 +342,10 @@ Alternatively, you can use the provided setup script to automate the creation of
 ### Quick Start Guide
 
 1. **Set up the OpenAI API key:**
-   Create a file named `openai_apikey.txt` in the root directory of the project and add your OpenAI API key to this file. The `main.py` script will read the API key from this file.
+   Export the OpenAI API key as an environment variable. This key is required for running the application.
 
    ```bash
-   echo "your-openai-api-key" > openai_apikey.txt
+   export OPENAI_API_KEY="your-openai-api-key"
    ```
 
 2. **Run the script for the first time:**
