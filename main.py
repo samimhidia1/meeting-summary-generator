@@ -41,7 +41,7 @@ def main(
 
 
 if __name__ == "__main__":
-    OPENAI_API_KEY = open("openai_apikey.txt", "r").read().strip()
+    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
     print("Welcome to the meeting summarizer!")
     print("This program will summarize a meeting from a video, audio file, or text file.")
