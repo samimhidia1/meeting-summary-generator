@@ -203,32 +203,34 @@ The project is structured as follows:
 
 ```
 meeting_summary_generator/
-├── audio_extractor
-│   └── audio_extractor.py
-├── generate_meeting_summary
-│   ├── generate_meeting_summary.py
-│   └── prompts
-│       ├── summary_structure_2.txt
-│       └── summary_structure.txt
-├── main.py
-├── meeting_summarizer
-│   ├── meeting_summarizer.py
-│   ├── prompts
-│   │   └── summarize_transcript.txt
-│   └── utils.py
-├── openai_api_interaction
-│   └── openai_api_interaction.py
-├── pipelines.py
+├── src
+│   ├── audio_extractor
+│   │   └── audio_extractor.py
+│   ├── generate_meeting_summary
+│   │   ├── generate_meeting_summary.py
+│   │   └── prompts
+│   │       ├── summary_structure_2.txt
+│   │       └── summary_structure.txt
+│   ├── main.py
+│   ├── meeting_summarizer
+│   │   ├── meeting_summarizer.py
+│   │   ├── prompts
+│   │   │   └── summarize_transcript.txt
+│   │   └── utils.py
+│   ├── openai_api_interaction
+│   │   └── openai_api_interaction.py
+│   ├── pipelines.py
+│   ├── speech_transcriber
+│   │   └── speech_transcriber.py
+├── lib
 ├── projects
-│   └── MK-Monarch
-│       ├── audios
-│       ├── summaries
-│       ├── transcriptions
-│       └── videos
+│   └── MK-Monarch
+│       ├── audios
+│       ├── summaries
+│       ├── transcriptions
+│       └── videos
 ├── README.md
 ├── requirements.txt
-├── speech_transcriber
-│   └── speech_transcriber.py
 ├── temp
 └── tests
     ├── test_audio_extractor.py
@@ -246,6 +248,13 @@ python -m unittest discover  tests
 
 **Note:** Running the tests for `speech_transcriber` and `meeting_summarizer` will consume tokens from your OpenAI API quota, so use it judiciously to avoid running out of your allocated tokens.
 
+To run the new tests, use the following command:
+
+```bash
+pytest
+```
+
+This will run all the tests in the `tests` directory, including the new tests that have been created.
 ## Setup Script
 
 The `setup.sh` script automates the creation of the virtual environment and installation of dependencies. To use the script, run the following command:
