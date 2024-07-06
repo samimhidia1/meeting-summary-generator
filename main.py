@@ -16,17 +16,21 @@ def create_project_folders(project_name: str) -> None:
     project_path = f"projects/{project_name}"
     subfolders = ["audios", "summaries", "transcriptions", "videos"]
 
-    if not os.path.exists(project_path):
-        os.makedirs(project_path)
-        for subfolder in subfolders:
-            os.makedirs(f"{project_path}/{subfolder}")
-        print(f"Created the project folder: {project_path}")
-        print(f"Created the subfolders: {', '.join(subfolders)}")
-        print("Please copy your video, audio, or text file to the project's folders.")
-        print("Then run the program again.")
-        exit(0)
-    else:
-        print("_____________________________________________________________")
+    try:
+        if not os.path.exists(project_path):
+            os.makedirs(project_path)
+            for subfolder in subfolders:
+                os.makedirs(f"{project_path}/{subfolder}")
+            print(f"Created the project folder: {project_path}")
+            print(f"Created the subfolders: {', '.join(subfolders)}")
+            print("Please copy your video, audio, or text file to the project's folders.")
+            print("Then run the program again.")
+            exit(0)
+        else:
+            print("_____________________________________________________________")
+    except OSError as e:
+        print(f"Error creating project folders: {e}")
+        exit(1)
 
 
 def get_user_input(prompt: str) -> str:
@@ -72,14 +76,22 @@ def main(
     audio_path : str, optional
         The path to save the extracted audio, by default None.
     """
-    if option == 1:
-        video_to_summary(project=project, video_name=video_name, api_key=api_key)
-    elif option == 2:
-        audio_to_summary(project, audio_path=audio_path, api_key=api_key)
-    elif option == 3:
-        transcription = open(transcription_path, "r", encoding='utf-8').read()
-        name = transcription_path.split("/")[-1].split(".")[0]
-        text_to_summary(project, transcription=transcription, name=name, api_key=api_key)
+    try:
+        if option == 1:
+            video_to_summary(project=project, video_name=video_name, api_key=api_key)
+        elif option == 2:
+            audio_to_summary(project, audio_path=audio_path, api_key=api_key)
+        elif option == 3:
+            if not os.path.exists(transcription_path):
+                raise FileNotFoundError(f"Transcription file not found: {transcription_path}")
+            transcription = open(transcription_path, "r", encoding='utf-8').read()
+            name = transcription_path.split("/")[-1].split(".")[0]
+            text_to_summary(project, transcription=transcription, name=name, api_key=api_key)
+        else:
+            raise ValueError("Invalid option selected. Please choose a valid option.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        exit(1)
 
 
 if __name__ == "__main__":
