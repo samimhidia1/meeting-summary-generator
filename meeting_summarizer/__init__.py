@@ -1,2 +1,2 @@
 from .meeting_summarizer import summarize_transcription
-from .utils import add_chunks_of_transcripts_to_prompt, count_tokens
+from .utils import create_messages_from_transcripts, count_tokens
