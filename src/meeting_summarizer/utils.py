@@ -1,10 +1,9 @@
-from typing import List, Dict
-
+from typing import List, Dict, Optional
 import tiktoken
+from openai_api_interaction import OpenAIAudioAPI, OpenAICompletionAPI
+import config
 
-
-def count_tokens(text: str,
-                 model: str = "gpt-4o") -> int:
+def count_tokens(text: str, model: str = "gpt-4o") -> int:
     """
     Counts the number of tokens in the text.
     Parameters
@@ -27,7 +26,6 @@ def count_tokens(text: str,
     num_tokens = len(tokens)
 
     return num_tokens
-
 
 def create_messages_from_transcripts(
         transcriptions: str,
@@ -80,3 +78,114 @@ def create_messages_from_transcripts(
         list_of_messages.append(message)
 
     return list_of_messages
+
+def construct_path(project: str, folder: str, filename: str) -> str:
+    """
+    Constructs a file path from the given project, folder, and filename.
+    Parameters
+    ----------
+    project : str
+        The project name.
+    folder : str
+        The folder name.
+    filename : str
+        The filename.
+
+    Returns
+    -------
+    str
+        The constructed file path.
+    """
+    return f"projects/{project}/{folder}/{filename}"
+
+def extract_name_from_path(file_path: str) -> str:
+    """
+    Extracts the name from a given file path.
+    Parameters
+    ----------
+    file_path : str
+        The file path.
+
+    Returns
+    -------
+    str
+        The extracted name.
+    """
+    return file_path.split("/")[-1].split(".")[0]
+
+def create_openai_audio_config(api_key: str, file_path: str) -> OpenAIAudioAPI:
+    """
+    Creates an OpenAIAudioAPI configuration.
+    Parameters
+    ----------
+    api_key : str
+        The OpenAI API key.
+    file_path : str
+        The file path.
+
+    Returns
+    -------
+    OpenAIAudioAPI
+        The OpenAIAudioAPI configuration.
+    """
+    return OpenAIAudioAPI(api_key=api_key, file_path=file_path)
+
+def create_openai_completion_config(api_key: str, content: str, max_tokens: int) -> OpenAICompletionAPI:
+    """
+    Creates an OpenAICompletionAPI configuration.
+    Parameters
+    ----------
+    api_key : str
+        The OpenAI API key.
+    content : str
+        The content for the completion.
+    max_tokens : int
+        The maximum number of tokens.
+
+    Returns
+    -------
+    OpenAICompletionAPI
+        The OpenAICompletionAPI configuration.
+    """
+    return OpenAICompletionAPI(
+        api_key=api_key,
+        max_tokens=max_tokens,
+        temperature=config.TEMPERATURE,
+        presence_penalty=config.PRESENCE_PENALTY,
+        frequency_penalty=config.FREQUENCY_PENALTY,
+        messages=[{"role": "system", "content": "You are a helpful assistant."},
+                  {"role": "user", "content": content}]
+    )
+
+def save_text(text: str, output_path: str) -> None:
+    """
+    Saves the given text to the specified output path.
+    Parameters
+    ----------
+    text : str
+        The text to save.
+    output_path : str
+        The output file path.
+
+    Returns
+    -------
+    None
+    """
+    with open(output_path, "w", encoding='utf-8') as transcription_file:
+        transcription_file.write(text)
+
+def read_prompt_template(file_path: str) -> str:
+    """
+    Reads the prompt template from the specified file path.
+    Parameters
+    ----------
+    file_path : str
+        The file path.
+
+    Returns
+    -------
+    str
+        The prompt template.
+    """
+    with open(file_path, "r", encoding='utf-8') as file:
+        return file.read()
