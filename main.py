@@ -4,6 +4,48 @@ from typing import Optional
 from pipelines import video_to_summary, audio_to_summary, text_to_summary
 
 
+def create_project_folders(project_name: str) -> None:
+    """
+    Creates the necessary project folders and subfolders.
+
+    Parameters
+    ----------
+    project_name : str
+        The name of the project.
+    """
+    project_path = f"projects/{project_name}"
+    subfolders = ["audios", "summaries", "transcriptions", "videos"]
+
+    if not os.path.exists(project_path):
+        os.makedirs(project_path)
+        for subfolder in subfolders:
+            os.makedirs(f"{project_path}/{subfolder}")
+        print(f"Created the project folder: {project_path}")
+        print(f"Created the subfolders: {', '.join(subfolders)}")
+        print("Please copy your video, audio, or text file to the project's folders.")
+        print("Then run the program again.")
+        exit(0)
+    else:
+        print("_____________________________________________________________")
+
+
+def get_user_input(prompt: str) -> str:
+    """
+    Gets user input with the given prompt.
+
+    Parameters
+    ----------
+    prompt : str
+        The prompt to display to the user.
+
+    Returns
+    -------
+    str
+        The user's input.
+    """
+    return input(prompt)
+
+
 def main(
         project: str,
         api_key: str,
@@ -47,65 +89,40 @@ if __name__ == "__main__":
 
     print("Welcome to the meeting summarizer!")
     print("This program will summarize a meeting from a video, audio file, or text file.")
-    print("Il will first extract the audio from the video, then transcribe the audio, "
+    print("It will first extract the audio from the video, then transcribe the audio, "
           "and finally summarize the meeting notes to a text file.")
     print("You can also choose to start from an audio file or a text file directly.")
-    print("To begin with Enter a name for your project.")
-    project_name = input("Enter the name of the project: ")
-    print("You chose the name: {}".format(project_name))
-    if not os.path.exists("projects"):
-        os.makedirs("projects")
-    if not os.path.exists("projects/{}".format(project_name)):
-        os.makedirs("projects/{}".format(project_name))
-        os.makedirs("projects/{}/audios".format(project_name))
-        os.makedirs("projects/{}/summaries".format(project_name))
-        os.makedirs("projects/{}/transcriptions".format(project_name))
-        os.makedirs("projects/{}/videos".format(project_name))
-        print("Created the project folder: projects/{}".format(project_name))
-        print("Created the subfolders: audios, summaries, transcriptions, videos")
-        print("please copy your video, audio or text file to the project's folders.")
-        print("Then run the program again.")
-        exit(0)
-    else:
-        print("_____________________________________________________________")
+    print("To begin with, enter a name for your project.")
+
+    project_name = get_user_input("Enter the name of the project: ")
+    print(f"You chose the name: {project_name}")
+
+    create_project_folders(project_name)
 
     print("Choose an option to start from:")
     print("1. Start from a video")
     print("2. Start from an audio file")
     print("3. Start from a text file")
     print("4. Exit")
-    chosen_option = input("Enter your choice: ")
+
+    chosen_option = get_user_input("Enter your choice: ")
+
     if chosen_option == "1":
         print("You chose to start from a video")
-        videoName = input("Enter the name of the video file: ")
-        main(project=project_name,
-             video_name=videoName,
-             api_key=OPENAI_API_KEY,
-             option=int(chosen_option)
-             )
-
+        video_name = get_user_input("Enter the name of the video file: ")
+        main(project=project_name, video_name=video_name, api_key=OPENAI_API_KEY, option=int(chosen_option))
     elif chosen_option == "2":
         print("You chose to start from an audio file")
-        audioName = input("Enter the name to the audio file: ")
-        audioPath = "projects/{}/audios/{}".format(project_name, audioName)
-        main(project=project_name,
-             audio_path=audioPath,
-             api_key=OPENAI_API_KEY,
-             option=int(chosen_option)
-             )
+        audio_name = get_user_input("Enter the name of the audio file: ")
+        audio_path = f"projects/{project_name}/audios/{audio_name}"
+        main(project=project_name, audio_path=audio_path, api_key=OPENAI_API_KEY, option=int(chosen_option))
         print("_____________________________________________________________")
-
     elif chosen_option == "3":
         print("You chose to start from a text file")
-        transcriptionName = input("Enter the name to the text file: ")
-        transcriptionPath = "projects/{}/transcriptions/{}".format(project_name, transcriptionName)
-        main(project=project_name,
-             transcription_path=transcriptionPath,
-             api_key=OPENAI_API_KEY,
-             option=int(chosen_option)
-             )
+        transcription_name = get_user_input("Enter the name of the text file: ")
+        transcription_path = f"projects/{project_name}/transcriptions/{transcription_name}"
+        main(project=project_name, transcription_path=transcription_path, api_key=OPENAI_API_KEY, option=int(chosen_option))
         print("_____________________________________________________________")
-
     elif chosen_option == "4":
         print("Goodbye!")
         exit()
