@@ -241,7 +241,7 @@ meeting_summary_generator/
 │   ├── pipelines.py
 │   ├── speech_transcriber
 │   │   └── speech_transcriber.py
-├── lib
+├???─ lib
 ├── projects
 │   └── MK-Monarch
 │       ├── audios
@@ -519,6 +519,29 @@ meeting_summary_generator/
     ├── test_audio_extractor.py
     ├── test_meeting_summarizer.py
     └── test_speech_transcriber.py
+## Testing
+
+Before running the tests, ensure that the `OPENAI_API_KEY` environment variable is set:
+
+```bash
+export OPENAI_API_KEY="your-openai-api-key"
+```
+
+You can run the unit tests with the following command:
+
+```bash
+PYTHONPATH=src python -m unittest discover tests
+```
+
+**Note:** Running the tests for `speech_transcriber` and `meeting_summarizer` will consume tokens from your OpenAI API quota, so use it judiciously to avoid running out of your allocated tokens.
+
+To run the new tests, use the following command:
+
+```bash
+PYTHONPATH=src pytest
+```
+
+This will run all the tests in the `tests` directory, including the new tests that have been created.
 ```
 
 ## Testing
