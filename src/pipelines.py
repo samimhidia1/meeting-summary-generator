@@ -30,9 +30,8 @@ def video_to_summary(
     # Step 1: Extract audio from the video
 
     print(f"Extracting audio from: {video_name} ...")
-    video_path = "projects/{}/videos/{}".format(project, video_name)
-    audio_output_path = "projects/{}/audios/{}.wav".format(
-        project, video_name.split(".")[0])
+    video_path = f"projects/{project}/videos/{video_name}"
+    audio_output_path = f"projects/{project}/audios/{video_name.split('.')[0]}.wav"
     extract_audio_from_video(video_path, audio_output_path)
     print(f"Audio extracted and saved to: {audio_output_path}")
 
@@ -62,8 +61,7 @@ def audio_to_summary(
     configAudio = OpenAIAudioAPI(api_key=api_key, file_path=audio_path)
     transcription = transcribe_audio(configAudio)
     audio_name = audio_path.split("/")[-1].split(".")[0]
-    output_transcription_path = "projects/{}/transcriptions/transcription_{}.txt".format(
-        project, audio_name)
+    output_transcription_path = f"projects/{project}/transcriptions/transcription_{audio_name}.txt"
     save_text(transcription, output_transcription_path)
     print("Transcription from the audio completed.")
 
@@ -92,8 +90,6 @@ def text_to_summary(
         The OpenAI API key.
     """
     # Step 1: Summarize the meeting transcription
-    prompt_template_summarize = open("meeting_summarizer/prompts/summarize_transcript.txt",
-                                     "r", encoding='utf-8').read()
     print("Summarizing the meeting transcription...")
     configSummary = OpenAICompletionAPI(api_key=api_key,
                                         max_tokens=777,
@@ -104,16 +100,14 @@ def text_to_summary(
                                                   {"role": "user", "content": transcription}])
     summary = summarize_transcription(transcriptions=transcription,
                                       config=configSummary)
-    text_name = name
-    output_summary_path = "projects/{}/summaries/summary_{}.txt".format(
-        project, text_name)
+    output_summary_path = f"projects/{project}/summaries/summary_{name}.txt"
     save_text(summary, output_summary_path)
     print("Summary of transcriptions completed.")
     print(f"Transcriptions summary saved to: {output_summary_path}")
 
     # Step 2: Generate the meeting summary
-    prompt_template_meeting_summary = open("generate_meeting_summary/prompts/summary_structure_2.txt",
-                                           "r", encoding='utf-8').read()
+    with open("generate_meeting_summary/prompts/summary_structure_2.txt", "r", encoding='utf-8') as file:
+        prompt_template_meeting_summary = file.read()
     print("Generating the meeting summary...")
     configMeetingSummary = OpenAICompletionAPI(api_key=api_key,
                                                max_tokens=2000,
@@ -122,8 +116,7 @@ def text_to_summary(
     meeting_summary = generate_meeting_summary(summary=summary,
                                                config=configMeetingSummary,
                                                prompt_template=prompt_template_meeting_summary)
-    output_meeting_summary_path = "projects/{}/summaries/meeting_summary_{}.txt".format(
-        project, text_name)
+    output_meeting_summary_path = f"projects/{project}/summaries/meeting_summary_{name}.txt"
     save_text(meeting_summary, output_meeting_summary_path)
     print("Meeting summary completed.")
     print(f"Meeting summary saved to: {output_meeting_summary_path}")
