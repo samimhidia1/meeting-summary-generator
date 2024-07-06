@@ -6,12 +6,12 @@ The Meeting Summary Generator is a Python-based tool that extracts audio from an
 
 - Extract audio from video files (MP4 format)
 - Transcribe audio using OpenAI's Whisper model
-- Summarize transcriptions using OpenAI's GPT-3.5 text-davinci-003 model
+- Summarize transcriptions using OpenAI's GPT-4o model
 - Save generated meeting summaries as text files
 
 ## Requirements
 
-- [Download Python](https://www.python.org/downloads/) 3.10 or higher 
+- [Download Python](https://www.python.org/downloads/) 3.10 or higher
 - Get an [OpenAI](https://openai.com)  API key
 
 ## Installation
@@ -21,12 +21,12 @@ The Meeting Summary Generator is a Python-based tool that extracts audio from an
     git clone https://github.com/samimhidia1/meeting-summary-generator.git
     ```
 2. Change to the project directory:
-    
+
     ```bash
     cd meeting-summary-generator
     ```
 3. Create a virtual environment:
-    
+
     ```bash
     python3 -m venv venv
     ```
@@ -37,23 +37,32 @@ The Meeting Summary Generator is a Python-based tool that extracts audio from an
     venv\Scripts\activate
     ```
     * if you are using Linux or macOS:
-    
+
      ```bash
     source venv/bin/activate
     ```
 
 5. Install the project dependencies:
-    
+
     ```bash
     pip install -r requirements.txt
     ```
-   
+
+Alternatively, you can use the provided setup script to automate the creation of the virtual environment and installation of dependencies:
+
+```bash
+./setup.sh
+```
 
 ## Usage
 
-### Setting up the OpenAI API key in the script
+### Setting up the OpenAI API key
 
-At the line 45 of the `main.py` script, replace the value of the `OPENAI_API_KEY` variable with your OpenAI API key.
+Create a file named `openai_apikey.txt` in the root directory of the project and add your OpenAI API key to this file. The `main.py` script will read the API key from this file.
+
+```bash
+echo "your-openai-api-key" > openai_apikey.txt
+```
 
 ### Running the script for the first time
 
@@ -67,11 +76,11 @@ The script will prompt you to enter the name of the project you want to generate
 
 e.g. `Project MK-Ultra`
 
-If the project does not exist, the script will create a new project directory with the name you entered. The project directory will be created in the `projects` directory. 
+If the project does not exist, the script will create a new project directory with the name you entered. The project directory will be created in the `projects` directory.
 
 ### Adding a video file to an existing project
 
-Place the video file you want to process in the `videos` directory of the project directory. 
+Place the video file you want to process in the `videos` directory of the project directory.
 
 The script will extract the audio from the video file and save it in the `audios` directory of the project directory, and then it will transcribe the audio and save the transcription in the `transcriptions` directory of the project directory. Finally, it will generate a summary of the transcription and save it in the `summaries` directory of the project directory.
 
@@ -238,6 +247,16 @@ python -m unittest discover  tests
 ```
 
 **Note:** Running the tests for `speech_transcriber` and `meeting_summarizer` will consume tokens from your OpenAI API quota, so use it judiciously to avoid running out of your allocated tokens.
+
+## Setup Script
+
+The `setup.sh` script automates the creation of the virtual environment and installation of dependencies. To use the script, run the following command:
+
+```bash
+./setup.sh
+```
+
+The script will create a virtual environment, activate it, and install the required dependencies from the `requirements.txt` file.
 
 ## TODO
 
