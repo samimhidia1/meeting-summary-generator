@@ -12,3 +12,6 @@ FREQUENCY_PENALTY = 0.4
 
 # Prompt template file paths
 PROMPT_TEMPLATE_SUMMARY = "generate_meeting_summary/prompts/summary_structure_2.txt"
+
+# Batch processing settings
+BATCH_SIZE = 20

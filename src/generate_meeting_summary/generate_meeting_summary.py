@@ -1,7 +1,7 @@
 import openai
 from meeting_summarizer.utils import create_messages_from_transcripts
 from openai_api_interaction import OpenAICompletionAPI
-from config import OPENAI_API_KEY, MAX_TOKENS_SUMMARY, TEMPERATURE, PRESENCE_PENALTY, FREQUENCY_PENALTY, PROMPT_TEMPLATE_SUMMARY
+from config import OPENAI_API_KEY, MAX_TOKENS_SUMMARY, TEMPERATURE, PRESENCE_PENALTY, FREQUENCY_PENALTY, PROMPT_TEMPLATE_SUMMARY, BATCH_SIZE
 
 def generate_meeting_summary(
         summary: str,
@@ -50,7 +50,7 @@ def generate_meeting_summary(
         summary = response.choices[0]["message"]["content"].strip()
         return summary
 
-    elif len(messages) < 20:
+    elif len(messages) < BATCH_SIZE:
         response = openai.ChatCompletion.create(
             model=config.model,
             messages=[
@@ -72,13 +72,13 @@ def generate_meeting_summary(
 
     else:
         responses = []
-        for i in range(0, len(messages), 20):
+        for i in range(0, len(messages), BATCH_SIZE):
             response = openai.ChatCompletion.create(
                 model=config.model,
                 messages=[
                     {"role": "system", "content": "You are a helpful assistant."},
                     {"role": "user", "content": "\n".join(
-                        [msg["content"] for msg in messages[i:i + 20]])}
+                        [msg["content"] for msg in messages[i:i + BATCH_SIZE]])}
                 ],
                 max_tokens=config.max_tokens,
                 temperature=TEMPERATURE,
@@ -110,7 +110,7 @@ def merge_summaries(summaries: list, config: OpenAICompletionAPI) -> str:
     str
         The merged summary.
     """
-    prompt_merging = open("prompts/merge_summaries.txt",
+    prompt_merging = open(PROMPT_TEMPLATE_SUMMARY,
                           "r", encoding='utf-8').read()
     summaries_to_merge = ""
     for i, summary in enumerate(summaries):
