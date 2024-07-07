@@ -1,4 +1,5 @@
 import os
+import tempfile
 from typing import Optional
 
 from moviepy.editor import VideoFileClip
@@ -42,13 +43,13 @@ def extract_audio_from_video(
         end_time = video.duration
     audio = video.subclip(start_time, end_time).audio
 
-    # Save audio to a temporary file
-    temp_audio_path = "temp_audio." + audio_format
+    # Save audio to a unique temporary file
+    with tempfile.NamedTemporaryFile(delete=False, suffix=f".{audio_format}") as temp_audio_file:
+        temp_audio_path = temp_audio_file.name
     audio.write_audiofile(temp_audio_path, codec=audio_format)
 
     # Convert the temporary audio file to the desired format and save it
-    audio_segment = AudioSegment.from_file(
-        temp_audio_path, format=audio_format)
+    audio_segment = AudioSegment.from_file(temp_audio_path, format=audio_format)
     audio_segment.export(audio_path, format=audio_format)
 
     # Remove the temporary audio file
