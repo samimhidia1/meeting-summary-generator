@@ -50,9 +50,9 @@ def transcribe_audio(
     str
         The transcription of the audio.
     """
-    # if the file is larger than 24MB, split it into chunks
+    # if the file is larger than 25MB, split it into chunks
     audio_size = os.path.getsize(config.file_path)
-    max_size = 24 * 1024 * 1024
+    max_size = 25 * 1024 * 1024
 
     if audio_size > max_size:
         # split the audio file into chunks
@@ -82,9 +82,13 @@ def transcribe_audio(
                     "language": config.language
                 }
             )
-            response.raise_for_status()
             try:
-                transcription = response.json()["text"]
+                response.raise_for_status()
+                transcription = response.json().get("text", "")
+                if not transcription:
+                    raise ValueError(f"Unexpected response format: {response.text}")
+            except requests.exceptions.HTTPError as e:
+                raise ValueError(f"HTTP error occurred: {e.response.text}") from e
             except (KeyError, ValueError) as e:
                 raise ValueError(f"Unexpected response format: {response.text}") from e
             transcriptions.append(transcription)
