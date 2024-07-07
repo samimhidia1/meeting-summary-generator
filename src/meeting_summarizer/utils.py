@@ -1,7 +1,7 @@
 from typing import List, Dict, Optional
 import tiktoken
 from src.openai_api_interaction.openai_api_interaction import OpenAIAudioAPI, OpenAICompletionAPI
-from src.config import config
+from src.config import TEMPERATURE, PRESENCE_PENALTY, FREQUENCY_PENALTY
 
 def count_tokens(text: str, model: str = "gpt-4o") -> int:
     """
@@ -150,9 +150,9 @@ def create_openai_completion_config(api_key: str, content: str, max_tokens: int)
     return OpenAICompletionAPI(
         api_key=api_key,
         max_tokens=max_tokens,
-        temperature=config.TEMPERATURE,
-        presence_penalty=config.PRESENCE_PENALTY,
-        frequency_penalty=config.FREQUENCY_PENALTY,
+        temperature=TEMPERATURE,
+        presence_penalty=PRESENCE_PENALTY,
+        frequency_penalty=FREQUENCY_PENALTY,
         messages=[{"role": "system", "content": "You are a helpful assistant."},
                   {"role": "user", "content": content}]
     )
