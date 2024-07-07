@@ -51,6 +51,10 @@ class TestAudioExtractor(unittest.TestCase):
         self.assertEqual(audio.frame_rate, 44100)  # Check if the frame rate is 44100 Hz
         self.assertGreater(audio.duration_seconds, 0)  # Check if the duration is greater than 0
 
+        # Additional logging for debugging
+        print(f"Audio frame rate: {audio.frame_rate}")
+        print(f"Audio duration: {audio.duration_seconds} seconds")
+
         if os.path.exists(output_audio):
             os.remove(output_audio)
 
