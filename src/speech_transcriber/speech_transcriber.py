@@ -1,10 +1,8 @@
 import os
-
-import openai
+import requests
 from typing import List
 from src.openai_api_interaction.openai_api_interaction import OpenAIAudioAPI
 from pydub import AudioSegment
-
 
 def split_audio_file(audio_path: str, chunk_duration: int = 100000) -> List[str]:
     """
@@ -37,7 +35,6 @@ def split_audio_file(audio_path: str, chunk_duration: int = 100000) -> List[str]
 
     return audio_chunks
 
-
 def transcribe_audio(
         config: OpenAIAudioAPI,
 ) -> str:
@@ -53,9 +50,6 @@ def transcribe_audio(
     str
         The transcription of the audio.
     """
-    # Set up the OpenAI API client
-    openai.api_key = config.api_key
-
     # if the file is larger than 24MB, split it into chunks
     audio_size = os.path.getsize(config.file_path)
     max_size = 24 * 1024 * 1024
@@ -72,20 +66,31 @@ def transcribe_audio(
     i = 0
     for chunk_path in audio_chunks:
         with open(chunk_path, "rb") as audio_file:
-            response = openai.Audio.transcriptions.create(
-                model=config.model,
-                file=audio_file,
-                prompt=config.prompt,
-                response_format=config.response_format,
-                temperature=config.temperature,
-                language=config.language
+            response = requests.post(
+                "https://api.openai.com/v1/audio/transcriptions",
+                headers={
+                    "Authorization": f"Bearer {config.api_key}"
+                },
+                files={
+                    "file": audio_file
+                },
+                data={
+                    "model": config.model,
+                    "prompt": config.prompt,
+                    "response_format": config.response_format,
+                    "temperature": config.temperature,
+                    "language": config.language
+                }
             )
+            response.raise_for_status()
+            try:
+                transcription = response.json()["text"]
+            except (KeyError, ValueError) as e:
+                raise ValueError(f"Unexpected response format: {response.text}") from e
+            transcriptions.append(transcription)
 
         print("progress:", i / len(audio_chunks))
         i += 1
-
-        transcription = response.get("text")
-        transcriptions.append(transcription)
 
         if audio_size > max_size:
             os.remove(chunk_path)
