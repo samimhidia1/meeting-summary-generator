@@ -45,7 +45,7 @@ def summarize_transcription(
             presence_penalty=config.presence_penalty,
             frequency_penalty=config.frequency_penalty,
         )
-        summary = [choice["message"]["content"].strip()
+        summary = [choice.message.content.strip()
                    for choice in response.choices]
         summary = "".join(summary)
         return summary
@@ -64,7 +64,7 @@ def summarize_transcription(
                 presence_penalty=config.presence_penalty,
                 frequency_penalty=config.frequency_penalty,
             )
-            summary = [choice["message"]["content"].strip()
+            summary = [choice.message.content.strip()
                        for choice in response.choices]
             responses += summary
         summary = "".join(responses)

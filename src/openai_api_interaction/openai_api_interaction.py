@@ -20,7 +20,7 @@ class OpenAIAudioAPI:
     prompt : Optional[str], optional
         The prompt to use for transcription, by default None
     response_format : Optional[str], optional
-        The format of the response, by default "text"
+        The format of the response, by default "json"
     temperature : Optional[float], optional
         The temperature to use for transcription, by default 0.0
     language : Optional[str], optional
@@ -31,7 +31,7 @@ class OpenAIAudioAPI:
     model: str = "whisper-1"
     file: Optional[str] = ""
     prompt: Optional[str] = None
-    response_format: Optional[str] = "text"
+    response_format: Optional[str] = "json"
     temperature: Optional[float] = 0.0
     language: Optional[str] = "en"
 

@@ -77,7 +77,7 @@ def transcribe_audio(
                 data={
                     "model": config.model,
                     "prompt": config.prompt,
-                    "response_format": config.response_format,
+                    "response_format": "json",  # Ensure response format is JSON
                     "temperature": config.temperature,
                     "language": config.language
                 }
