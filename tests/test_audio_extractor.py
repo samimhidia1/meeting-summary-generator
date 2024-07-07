@@ -33,6 +33,9 @@ class TestAudioExtractor(unittest.TestCase):
         input_video = "tests/inputs/sample_video_with_frame.mp4"
         output_audio = "tests/outputs/sample_audio.wav"
 
+        # Ensure the output directory exists
+        os.makedirs(os.path.dirname(output_audio), exist_ok=True)
+
         extract_audio_from_video(input_video, output_audio, audio_format="wav")
 
         self.assertTrue(os.path.exists(output_audio))

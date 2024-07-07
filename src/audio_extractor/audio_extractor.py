@@ -32,6 +32,10 @@ def extract_audio_from_video(
     -------
     None
     """
+    # Check if the input video file exists
+    if not os.path.exists(video_path):
+        raise FileNotFoundError(f"The video file {video_path} does not exist.")
+
     # Load video and extract audio
     video = VideoFileClip(video_path)
     if end_time is None:
