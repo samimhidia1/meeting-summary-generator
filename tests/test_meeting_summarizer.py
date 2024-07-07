@@ -1,7 +1,7 @@
 import unittest
-from meeting_summarizer import summarize_transcription
-from openai_api_interaction import OpenAICompletionAPI
-
+import os
+from src.meeting_summarizer.meeting_summarizer import summarize_transcription
+from src.openai_api_interaction.openai_api_interaction import OpenAICompletionAPI
 
 class TestMeetingSummarizer(unittest.TestCase):
     """
@@ -12,7 +12,7 @@ class TestMeetingSummarizer(unittest.TestCase):
         """
         Test if the meeting transcription is successfully summarized.
         """
-        api_key = "your_openai_api_key"
+        api_key = os.getenv("OPENAI_API_KEY")
         transcriptions = [
             "Alice suggested a new marketing strategy.",
             "Bob proposed to increase the budget for the next quarter.",
@@ -20,7 +20,7 @@ class TestMeetingSummarizer(unittest.TestCase):
         ]
         config = OpenAICompletionAPI(
             api_key=api_key,
-            model="gpt-4",
+            model="gpt-4o",
             max_tokens=4000,
             temperature=0.5,
             top_p=1.0,

@@ -1,8 +1,8 @@
 import openai
 from typing import Optional, List, Dict
 
-from meeting_summarizer.utils import create_messages_from_transcripts
-from openai_api_interaction import OpenAICompletionAPI
+from src.meeting_summarizer.utils import create_messages_from_transcripts
+from src.openai_api_interaction.openai_api_interaction import OpenAICompletionAPI
 
 
 def summarize_transcription(

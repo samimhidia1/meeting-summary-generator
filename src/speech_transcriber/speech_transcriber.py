@@ -2,7 +2,7 @@ import os
 
 import openai
 from typing import List
-from openai_api_interaction import OpenAIAudioAPI
+from src.openai_api_interaction.openai_api_interaction import OpenAIAudioAPI
 from pydub import AudioSegment
 
 

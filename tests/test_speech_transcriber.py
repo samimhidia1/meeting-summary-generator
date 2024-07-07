@@ -1,7 +1,7 @@
 import unittest
 import os
-from speech_transcriber import transcribe_audio
-from openai_api_interaction import OpenAIAudioAPI
+from src.speech_transcriber.speech_transcriber import transcribe_audio
+from src.openai_api_interaction import OpenAIAudioAPI
 
 
 class TestSpeechTranscriber(unittest.TestCase):
