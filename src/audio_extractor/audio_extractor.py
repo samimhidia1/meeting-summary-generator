@@ -56,7 +56,9 @@ def extract_audio_from_video(
         audio_segment = AudioSegment.from_file(temp_audio_path, format=audio_format)
         audio_segment.export(audio_path, format=audio_format)
     except Exception as e:
-        raise RuntimeError(f"Error during audio conversion: {e}")
+        # Capture stderr output from ffmpeg for detailed error logging
+        stderr_output = e.stderr.decode(errors='ignore') if hasattr(e, 'stderr') else str(e)
+        raise RuntimeError(f"Error during audio conversion: {stderr_output}")
 
     # Remove the temporary audio file
     os.remove(temp_audio_path)
