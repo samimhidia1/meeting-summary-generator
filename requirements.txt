@@ -1,4 +1,4 @@
 moviepy~=1.0.3
 pydub~=0.25.1
 openai~=1.35.10
-tiktoken~=0.3.3
+tiktoken~=0.7.0
