@@ -23,7 +23,7 @@ def extract_audio_from_video(
     audio_path : str
         The path where the extracted audio file will be saved.
     audio_format : str, optional
-        The output format of the extracted audio, by default "wav".
+        The output format of the extracted audio, by default "mp3".
     start_time : float, optional
         The starting time (in seconds) from which to extract the audio, by default 0.0.
     end_time : float, optional
@@ -51,6 +51,9 @@ def extract_audio_from_video(
     except Exception as e:
         raise RuntimeError(f"Error during audio extraction: {e}")
 
+    # Ensure the output directory exists
+    os.makedirs(os.path.dirname(audio_path), exist_ok=True)
+
     # Convert the temporary audio file to the desired format and save it
     try:
         audio_segment = AudioSegment.from_file(temp_audio_path, format=audio_format)
@@ -61,4 +64,10 @@ def extract_audio_from_video(
         raise RuntimeError(f"Error during audio conversion: {stderr_output}")
 
     # Remove the temporary audio file
-    os.remove(temp_audio_path)
+    try:
+        os.remove(temp_audio_path)
+    except Exception as e:
+        print(f"Warning: Failed to remove temporary file {temp_audio_path}: {e}")
+
+    # Proper resource cleanup for VideoFileClip object
+    video.close()
