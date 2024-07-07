@@ -1,6 +1,6 @@
 from typing import List, Dict, Optional
 import tiktoken
-from openai_api_interaction import OpenAIAudioAPI, OpenAICompletionAPI
+from src.openai_api_interaction.openai_api_interaction import OpenAIAudioAPI, OpenAICompletionAPI
 import config
 
 def count_tokens(text: str, model: str = "gpt-4o") -> int:
