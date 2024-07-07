@@ -63,9 +63,9 @@ class TestSpeechTranscriber(unittest.TestCase):
         with self.assertRaises(Exception):
             transcribe_audio(config)
 
-    def test_transcribe_audio_different_model(self) -> None:
+    def test_transcribe_audio_with_whisper_model(self) -> None:
         """
-        Test if the audio is successfully transcribed using a different Whisper model.
+        Test if the audio is successfully transcribed using the whisper-1 model.
         """
         api_key = os.getenv("OPENAI_API_KEY")
         base_test_dir = "tests/inputs"
@@ -73,7 +73,7 @@ class TestSpeechTranscriber(unittest.TestCase):
         config = OpenAIAudioAPI(
             api_key=api_key,
             file_path=audio_path,
-            model="whisper-large"
+            model="whisper-1"
         )
 
         transcriptions = transcribe_audio(config)
