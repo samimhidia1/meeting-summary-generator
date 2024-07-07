@@ -72,8 +72,14 @@ def transcribe_audio(
     i = 0
     for chunk_path in audio_chunks:
         with open(chunk_path, "rb") as audio_file:
-            response = openai.Audio.transcribe(model=config.model,
-                                               file=audio_file)
+            response = openai.Audio.transcriptions.create(
+                model=config.model,
+                file=audio_file,
+                prompt=config.prompt,
+                response_format=config.response_format,
+                temperature=config.temperature,
+                language=config.language
+            )
 
         print("progress:", i / len(audio_chunks))
         i += 1
