@@ -46,7 +46,10 @@ def extract_audio_from_video(
     # Save audio to a unique temporary file
     with tempfile.NamedTemporaryFile(delete=False, suffix=f".{audio_format}") as temp_audio_file:
         temp_audio_path = temp_audio_file.name
-    audio.write_audiofile(temp_audio_path, codec=audio_format)
+    try:
+        audio.write_audiofile(temp_audio_path, codec=audio_format)
+    except Exception as e:
+        raise RuntimeError(f"Error during audio extraction: {e}")
 
     # Convert the temporary audio file to the desired format and save it
     try:
