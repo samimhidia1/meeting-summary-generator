@@ -9,3 +9,5 @@ outputs/transcriptions/*.txt
 venv/
 .vscode
 __pycache__/
+temp_audio.mp3
+tests/inputs/sample_audio.wav

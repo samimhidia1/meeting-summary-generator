@@ -31,20 +31,20 @@ class TestAudioExtractor(unittest.TestCase):
         Test if the extracted audio has the correct format and properties.
         """
         input_video = "tests/inputs/sample_video_with_frame.mp4"
-        output_audio = "tests/outputs/sample_audio.wav"
+        output_audio = "tests/outputs/sample_audio.mp3"
 
         # Ensure the output directory exists
         os.makedirs(os.path.dirname(output_audio), exist_ok=True)
 
         try:
-            extract_audio_from_video(input_video, output_audio, audio_format="wav")
+            extract_audio_from_video(input_video, output_audio, audio_format="mp3")
         except Exception as e:
             self.fail(f"Exception encountered during audio extraction: {e}")
 
         self.assertTrue(os.path.exists(output_audio))
 
         try:
-            audio = AudioSegment.from_file(output_audio, format="wav")
+            audio = AudioSegment.from_file(output_audio, format="mp3")
         except Exception as e:
             self.fail(f"Exception encountered during audio decoding: {e}")
 
