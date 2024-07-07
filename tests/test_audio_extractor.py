@@ -36,11 +36,18 @@ class TestAudioExtractor(unittest.TestCase):
         # Ensure the output directory exists
         os.makedirs(os.path.dirname(output_audio), exist_ok=True)
 
-        extract_audio_from_video(input_video, output_audio, audio_format="wav")
+        try:
+            extract_audio_from_video(input_video, output_audio, audio_format="wav")
+        except Exception as e:
+            self.fail(f"Exception encountered during audio extraction: {e}")
 
         self.assertTrue(os.path.exists(output_audio))
 
-        audio = AudioSegment.from_file(output_audio, format="wav")
+        try:
+            audio = AudioSegment.from_file(output_audio, format="wav")
+        except Exception as e:
+            self.fail(f"Exception encountered during audio decoding: {e}")
+
         self.assertEqual(audio.frame_rate, 44100)  # Check if the frame rate is 44100 Hz
         self.assertGreater(audio.duration_seconds, 0)  # Check if the duration is greater than 0
 
